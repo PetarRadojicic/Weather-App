@@ -7,15 +7,21 @@ class WeatherStore {
     error: Error | null = null;
     latitude: number | null = null;
     longitude: number | null = null;
+    days: number = 1;
 
     constructor() {
         makeAutoObservable(this);
     }
 
-    async getTemperature(latitude: number, longitude: number) {
+    async getTemperature() {
         this.loading = true;
         try {
-            this.temperature = await fetchTemperature(latitude, longitude);
+            console.log(this.latitude, this.longitude);
+            if (this.latitude !== null && this.longitude !== null) {
+                this.temperature = await fetchTemperature(this.latitude, this.longitude);
+            } else {
+                throw new Error("Coordinates not set");
+            }
         } catch (error) {
             this.error = error as Error;
         } finally {
@@ -24,9 +30,14 @@ class WeatherStore {
     }
 
     setCoordinates(latitude: number, longitude: number) {
+        console.log(latitude, longitude);
         this.latitude = latitude;
         this.longitude = longitude;
-        console.log('Coordinates set:', latitude, longitude);
+    }
+
+    setDays(days: number) {
+        console.log(days);
+        this.days = days;
     }
 }
 

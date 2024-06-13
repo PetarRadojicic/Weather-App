@@ -1,0 +1,40 @@
+.background {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: lightcyan;
+  }
+  
+  .dashboard {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 90%;
+    max-width: 1000px;
+    height: 90%;
+    max-height: 750px;
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  @media (max-width: 768px) {
+    .dashboard {
+      width: 95%;
+      height: auto;
+      padding: 15px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .dashboard {
+      width: 100%;
+      height: auto;
+      padding: 10px;
+      box-shadow: none;
+      border-radius: 0;
+    }
+  }
