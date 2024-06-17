@@ -7,13 +7,14 @@ import {
   Title,
   Tooltip,
   Legend,
-} from "chart.js";
-import { Line } from "react-chartjs-2";
-import styles from "./LineChart.module.css";
-import { weatherStore } from "../../stores/WeatherStore";
-import { useEffect } from "react";
-import { observer } from "mobx-react-lite";
+} from "chart.js"; // Import necessary components from Chart.js
+import { Line } from "react-chartjs-2"; // Import Line chart component from react-chartjs-2
+import styles from "./LineChart.module.css"; // Import CSS module for styling
+import { weatherStore } from "../../stores/WeatherStore"; // Import the weather store
+import { useEffect } from "react"; // Import useEffect hook from React
+import { observer } from "mobx-react-lite"; // Import observer for MobX integration
 
+// Register Chart.js components
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -24,6 +25,7 @@ ChartJS.register(
   Legend
 );
 
+// Chart options
 export const options = {
   responsive: true,
   maintainAspectRatio: false,
@@ -38,6 +40,7 @@ export const options = {
   },
 };
 
+// Function to generate labels for the x-axis
 const generateLabels = (timeData: string[], days: number): string[] => {
   return timeData.slice(0, days * 24).map((time) => {
     const date = new Date(time);
@@ -45,6 +48,7 @@ const generateLabels = (timeData: string[], days: number): string[] => {
   });
 };
 
+// Function to get indices for data points based on the interval
 const getIndices = (timeData: string[], days: number, intervalHours: number) => {
   const totalHours = days * 24;
   const indices = [];
@@ -54,7 +58,9 @@ const getIndices = (timeData: string[], days: number, intervalHours: number) => 
   return indices;
 };
 
+// Observer component to render the line chart
 export const LineChart = observer(() => {
+  // Fetch temperature data when the component mounts or days change
   useEffect(() => {
     const fetchData = async () => {
       await weatherStore.getTemperature();
@@ -63,9 +69,10 @@ export const LineChart = observer(() => {
     fetchData();
   }, [weatherStore.days]);
 
-  const labels = generateLabels(weatherStore.time, weatherStore.days);
-  const indices = getIndices(weatherStore.time, weatherStore.days, 3);
+  const labels = generateLabels(weatherStore.time, weatherStore.days); // Generate labels for the x-axis
+  const indices = getIndices(weatherStore.time, weatherStore.days, 3); // Get indices for data points
 
+  // Prepare data for the chart
   const data = {
     labels: indices.map(index => labels[index]),
     datasets: [

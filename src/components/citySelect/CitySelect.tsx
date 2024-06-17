@@ -1,17 +1,19 @@
-import { Select } from 'antd';
-import { observer } from 'mobx-react-lite';
-import { weatherStore } from '../../stores/WeatherStore';
+import { Select } from 'antd'; // Import Select component from Ant Design
+import { observer } from 'mobx-react-lite'; // Import observer for MobX integration
+import { weatherStore } from '../../stores/WeatherStore'; // Import the weather store
 
+// Observer component to render a dropdown for city selection
 export const CitySelect = observer(() => {
+  // Function to handle changes in city selection
   const handleChange = (value: string) => {
-    const [lat, lon] = value.split(',').map(Number);
-    weatherStore.setCoordinates(lat, lon);
-    weatherStore.getTemperature();
+    const [lat, lon] = value.split(',').map(Number); // Parse the selected value to get latitude and longitude
+    weatherStore.setCoordinates(lat, lon); // Set the coordinates in the weather store
+    weatherStore.getTemperature(); // Fetch temperature data for the selected city
   };
 
   return (
     <div>
-        Select a city: &nbsp;
+      Select a city: &nbsp;
       <Select
         showSearch
         style={{ width: 200 }}
