@@ -3,11 +3,12 @@ import { fetchTemperature } from '../api/weatherApi';
 
 class WeatherStore {
     temperature: number[] | null = null;
+    time: string[] = [];
     loading: boolean = false;
     error: Error | null = null;
     latitude: number | null = null;
     longitude: number | null = null;
-    days: number = 1;
+    days: number = 1; // Add days property
 
     constructor() {
         makeAutoObservable(this);
@@ -16,9 +17,10 @@ class WeatherStore {
     async getTemperature() {
         this.loading = true;
         try {
-            console.log(this.latitude, this.longitude);
             if (this.latitude !== null && this.longitude !== null) {
-                this.temperature = await fetchTemperature(this.latitude, this.longitude);
+                const response = await fetchTemperature(this.latitude, this.longitude);
+                this.temperature = response.temperature;
+                this.time = response.time;
             } else {
                 throw new Error("Coordinates not set");
             }
@@ -30,13 +32,11 @@ class WeatherStore {
     }
 
     setCoordinates(latitude: number, longitude: number) {
-        console.log(latitude, longitude);
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
-    setDays(days: number) {
-        console.log(days);
+    setDays(days: number) { // Add setDays method
         this.days = days;
     }
 }

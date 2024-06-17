@@ -9,7 +9,7 @@ const handleChange = (event: React.MouseEvent<HTMLElement>) => {
 
 export const DaySelect: React.FC = () => (
   <Space size={[8, 16]} wrap>
-    <Button value={1} onClick={handleChange}>1 day</Button>
+    <Button value={1} onClick={handleChange}>Today</Button>
     <Button value={2} onClick={handleChange}>2 days</Button>
     <Button value={3} onClick={handleChange}>3 days</Button>
     <Button value={4} onClick={handleChange}>4 days</Button>
